@@ -17,8 +17,8 @@ type Group struct {
 }
 
 type UserGroup struct {
-	UserID       User  `gorm:"ForeignKey:ID"`
-	GroupID      Group `gorm:"ForeignKey:ID"`
+	UserID       User  `gorm:"ForeignKey:UserID;AssociationForeignKey:ID"`
+	GroupID      Group `gorm:"ForeignKey:GroupID;AssociationForeignKey:ID"`
 	GoalPrice    int
 	CurrentPrice int
 	GoalDesc     string
