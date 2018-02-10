@@ -7,6 +7,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql" // mysql driver
 	"github.com/youtangai/eniwa03/api/config"
+	"github.com/youtangai/eniwa03/api/model"
 )
 
 var (
@@ -36,4 +37,15 @@ func connection() *sql.DB {
 	}
 
 	return db
+}
+
+func createUser(user model.User) error {
+	result, err := DataBase.Exec(`
+		insert into users(name, password) values('` + user.Name + `', '` + user.Password + `')
+	`)
+	if err != nil {
+		return err
+	}
+	log.Printf("result = %+v", result)
+	return nil
 }
