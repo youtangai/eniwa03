@@ -7,15 +7,16 @@ import (
 	"github.com/youtangai/eniwa03/api/model"
 )
 
-func createUser(user model.User) error {
+func createUser(user model.User) (int, error) {
 	result, err := DataBase.Exec(`
 		insert into users(name, password) values('` + user.Name + `', '` + user.Password + `')
 	`)
 	if err != nil {
-		return err
+		return -1, err
 	}
-	log.Printf("result = %+v", result)
-	return nil
+	log.Printf("result = %#v", result)
+	id, err := result.LastInsertId()
+	return int(id), nil
 }
 
 func readUsers() ([]model.User, error) {
@@ -39,6 +40,18 @@ func readUsers() ([]model.User, error) {
 	return users, nil
 }
 
+func updateUser(user model.User) error {
+	userID := strconv.Itoa(user.ID)
+	result, err := DataBase.Exec(`
+		update users set name = '` + user.Name + `', password = '` + user.Password + `' where = '` + userID + `'
+	`)
+	if err != nil {
+		return err
+	}
+	log.Printf("result = %#v", result)
+	return nil
+}
+
 //id だけあればよい
 func deleteUser(user model.User) error {
 	userID := strconv.Itoa(user.ID)
@@ -48,6 +61,6 @@ func deleteUser(user model.User) error {
 	if err != nil {
 		return err
 	}
-	log.Printf("result = %+v", result)
+	log.Printf("result = %#v", result)
 	return nil
 }
