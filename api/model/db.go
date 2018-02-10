@@ -5,13 +5,13 @@ import (
 )
 
 type User struct {
-	ID       uint
+	ID       int
 	Name     string
 	Password string
 }
 
 type Group struct {
-	ID        uint
+	ID        int
 	GroupName string
 	Start     time.Time
 	End       time.Time
@@ -19,8 +19,8 @@ type Group struct {
 }
 
 type UserGroup struct {
-	UserID       uint
-	GroupID      uint
+	UserID       int
+	GroupID      int
 	GoalPrice    int
 	CurrentPrice int
 	GoalDesc     string
