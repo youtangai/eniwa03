@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql" // mysql driver
 	"github.com/youtangai/eniwa03/api/config"
 	"github.com/youtangai/eniwa03/api/model"
 )
@@ -40,14 +41,14 @@ func connection() *gorm.DB {
 }
 
 func createTable() error {
-	DataBase.AutoMigrate(&model.User, &model.Group, &model.UserGroup)
-	if !DataBase.HasTable(&model.User) {
+	DataBase.AutoMigrate(&model.User{}, &model.Group{}, &model.UserGroup{})
+	if !DataBase.HasTable(&model.User{}) {
 		return errors.New("database:User table not created")
 	}
-	if !DataBase.HasTable(&model.Group) {
+	if !DataBase.HasTable(&model.Group{}) {
 		return errors.New("database:Group table not created")
 	}
-	if !DataBase.HasTable(&model.UserGroup) {
+	if !DataBase.HasTable(&model.UserGroup{}) {
 		return errors.New("database:UserGroup table not created")
 	}
 	return nil
