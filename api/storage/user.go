@@ -43,7 +43,7 @@ func readUsers() ([]model.User, error) {
 func deleteUser(user model.User) error {
 	userID := strconv.Itoa(user.ID)
 	result, err := DataBase.Exec(`
-		delete from users where id = '` + userID + `')
+		delete from users where id = '` + userID + `'
 	`)
 	if err != nil {
 		return err

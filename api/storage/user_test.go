@@ -22,3 +22,11 @@ func TestReadUsers(t *testing.T) {
 	}
 	fmt.Printf("users = %+v\n", users)
 }
+
+func TestDeleteUser(t *testing.T) {
+	user := model.User{ID: 1}
+	err := deleteUser(user)
+	if err != nil {
+		t.Fatalf("err = %+v\n", err)
+	}
+}
