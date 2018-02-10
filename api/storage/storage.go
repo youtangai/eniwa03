@@ -1,10 +1,12 @@
 package storage
 
 import (
+	"errors"
 	"log"
 
 	"github.com/jinzhu/gorm"
 	"github.com/youtangai/eniwa03/api/config"
+	"github.com/youtangai/eniwa03/api/model"
 )
 
 var (
@@ -35,4 +37,18 @@ func connection() *gorm.DB {
 	}
 
 	return db
+}
+
+func createTable() error {
+	DataBase.AutoMigrate(&model.User, &model.Group, &model.UserGroup)
+	if !DataBase.HasTable(&model.User) {
+		return errors.New("database:User table not created")
+	}
+	if !DataBase.HasTable(&model.Group) {
+		return errors.New("database:Group table not created")
+	}
+	if !DataBase.HasTable(&model.UserGroup) {
+		return errors.New("database:UserGroup table not created")
+	}
+	return nil
 }
