@@ -4,12 +4,14 @@ import (
 	"time"
 )
 
+//User is
 type User struct {
 	ID       int
 	Name     string
 	Password string
 }
 
+//Group is
 type Group struct {
 	ID        int
 	GroupName string
@@ -18,6 +20,7 @@ type Group struct {
 	State     int
 }
 
+//UserGroup is
 type UserGroup struct {
 	UserID       int
 	GroupID      int
