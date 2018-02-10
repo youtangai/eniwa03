@@ -14,7 +14,7 @@ type Group struct {
 	ID        int
 	GroupName string
 	Start     time.Time
-	End       time.Time
+	Dead      time.Time
 	State     int
 }
 
