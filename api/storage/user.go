@@ -43,7 +43,7 @@ func readUsers() ([]model.User, error) {
 func updateUser(user model.User) error {
 	userID := strconv.Itoa(user.ID)
 	result, err := DataBase.Exec(`
-		update users set name = '` + user.Name + `', password = '` + user.Password + `' where = '` + userID + `'
+		update users set name = '` + user.Name + `',password = '` + user.Password + `' where id = '` + userID + `'
 	`)
 	if err != nil {
 		return err
