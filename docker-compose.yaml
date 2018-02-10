@@ -23,3 +23,7 @@ services:
       - DB_PASSWD=199507620
     links:
       - db
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   ports:
+  #     - 8080:80
