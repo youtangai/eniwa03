@@ -16,6 +16,10 @@ services:
     ports: 
       - 62070:62070
     environment:
+      - DB_USER=eniwa
       - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=eniwa
+      - DB_PASSWD=199507620
     links:
       - db
