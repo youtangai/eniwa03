@@ -10,10 +10,12 @@ services:
     ports:
       - 3306:3306
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-  # api:
-  #   restart: always
-  #   build: ./api
-  #   ports: 
-  #     - 62070:62070
-  #   links:
-  #     - db
+  api:
+    restart: always
+    build: ./api
+    ports: 
+      - 62070:62070
+    environment:
+      - DB_HOST=db
+    links:
+      - db
