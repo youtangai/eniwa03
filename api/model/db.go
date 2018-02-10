@@ -1,15 +1,17 @@
 package model
 
-import "time"
+import (
+	"time"
+)
 
 type User struct {
-	ID       int `gorm:"primary_key;AUTO_INCREMENT"`
+	ID       uint
 	Name     string
 	Password string
 }
 
 type Group struct {
-	ID        int `gorm:"primary_key;AUTO_INCREMENT"`
+	ID        uint
 	GroupName string
 	Start     time.Time
 	End       time.Time
@@ -17,8 +19,8 @@ type Group struct {
 }
 
 type UserGroup struct {
-	UserID       User  `gorm:"ForeignKey:UserID;AssociationForeignKey:ID"`
-	GroupID      Group `gorm:"ForeignKey:GroupID;AssociationForeignKey:ID"`
+	UserID       uint
+	GroupID      uint
 	GoalPrice    int
 	CurrentPrice int
 	GoalDesc     string
