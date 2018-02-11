@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	TIME_FORMAT = "2016-01-02"
+	TIME_FORMAT = "2006-01-02"
 )
 
 //LoginController is
