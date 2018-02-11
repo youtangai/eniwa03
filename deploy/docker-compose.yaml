@@ -12,7 +12,7 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
   api:
     restart: always
-    build: ./api
+    image: yotanagai/eniwa03
     ports: 
       - 62070:62070
     environment:
@@ -23,7 +23,3 @@ services:
       - DB_PASSWD=199507620
     links:
       - db
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   ports:
-  #     - 8080:80
