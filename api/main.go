@@ -30,6 +30,7 @@ func main() {
 		v1.POST("/setting", controller.SettingController)
 		v1.POST("/charge", controller.ChargeController)
 		v1.GET("/users", controller.UsersController)
+		v1.POST("/invite", controller.InvitationController)
 	}
 	router.Run(":" + PORT)
 }

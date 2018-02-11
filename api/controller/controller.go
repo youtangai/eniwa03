@@ -202,3 +202,31 @@ func UsersController(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, users)
 }
+
+func InvitationController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	groupid := c.Query("group_id")
+	users := c.Query("users")
+	users = strings.Trim(users, "[")
+	users = strings.Trim(users, "]")
+
+	var userslice []string
+	if len(users) != 0 {
+		if strings.Contains(users, ",") {
+			userslice = strings.Split(users, ",")
+			fmt.Printf("users =%+v", userslice)
+		} else {
+			userslice = append(userslice, users)
+			fmt.Printf("users =%+v", userslice)
+		}
+		for _, value := range userslice {
+			err := storage.CreateUserGroup(value, groupid)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				log.Printf("err = %v", err)
+				return
+			}
+		}
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "success"})
+}
