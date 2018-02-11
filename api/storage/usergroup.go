@@ -160,3 +160,15 @@ func GetIndividuals(groupid string) ([]model.Individual, error) {
 	}
 	return individuals, nil
 }
+
+func GetUserGroupByUseridGroupid(userid, groupid string) (model.UserGroup, error) {
+	var usergroup model.UserGroup
+	row := DataBase.QueryRow(`
+		select * from user_groups where user_id = '` + userid + `' and group_id = '` + groupid + `'	
+	`)
+	err := row.Scan(&(usergroup.UserID), &(usergroup.GroupID), &(usergroup.GoalPrice), &(usergroup.CurrentPrice), &(usergroup.GoalDesc), &(usergroup.JoinFlag))
+	if err != nil {
+		return usergroup, err
+	}
+	return usergroup, nil
+}

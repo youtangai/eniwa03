@@ -109,3 +109,19 @@ func DetailController(c *gin.Context) {
 	detail.Individuals = individuals
 	c.JSON(http.StatusOK, detail)
 }
+
+func SetController(c *gin.Context) {
+	var resp model.GoalDetail
+	userid := c.Query("user_id")
+	groupid := c.Query("g_id")
+	usergroup, err := storage.GetUserGroupByUseridGroupid(userid, groupid)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Printf("err = %v", err)
+		return
+	}
+	resp.CurrentPrice = usergroup.CurrentPrice
+	resp.GoalPrice = usergroup.GoalPrice
+	resp.Desc = usergroup.GoalDesc
+	c.JSON(http.StatusOK, resp)
+}
