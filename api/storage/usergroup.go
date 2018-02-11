@@ -58,3 +58,16 @@ func updateUserGroup(usergroup model.UserGroup) error {
 	log.Printf("result = %v", result)
 	return nil
 }
+
+func deleteUserGroup(usergroup model.UserGroup) error {
+	userID := strconv.Itoa(usergroup.UserID)
+	groupID := strconv.Itoa(usergroup.GroupID)
+	result, err := DataBase.Exec(`
+		delete from user_groups where user_id = '` + userID + `' and group_id = '` + groupID + `'
+	`)
+	if err != nil {
+		return err
+	}
+	log.Printf("result = %v", result)
+	return nil
+}

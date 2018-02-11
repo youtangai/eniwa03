@@ -40,3 +40,12 @@ func TestUpdateUserGroup(t *testing.T) {
 		t.Fatalf("err = %v", err)
 	}
 }
+
+func TestDeleteUserGroup(t *testing.T) {
+	usergroup.UserID = 10
+	usergroup.GroupID = 4
+	err := deleteUserGroup(usergroup)
+	if err != nil {
+		t.Fatalf("err = %v", err)
+	}
+}
