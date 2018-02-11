@@ -49,3 +49,13 @@ func TestDeleteGroup(t *testing.T) {
 		t.Fatalf("err = %#v", err)
 	}
 }
+
+func TestCreateGroupExport(t *testing.T) {
+	name := "奥野"
+	date := "2018-02-11"
+	id, err := CreateGroup(name, date)
+	if err != nil {
+		t.Fatalf("err = %v", err)
+	}
+	fmt.Println(id)
+}
