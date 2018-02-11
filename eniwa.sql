@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: 2018 年 2 月 10 日 13:20
+-- Generation Time: 2018 年 2 月 11 日 03:25
 -- サーバのバージョン： 10.1.30-MariaDB-1~jessie
 -- PHP Version: 7.1.9
 
@@ -36,6 +36,13 @@ CREATE TABLE `groups` (
   `state` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- テーブルのデータのダンプ `groups`
+--
+
+INSERT INTO `groups` (`id`, `group_name`, `start`, `dead`, `state`) VALUES
+(4, 'eniwa03', '2018-02-11 11:33:10', '2018-02-11 11:33:10', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +55,13 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- テーブルのデータのダンプ `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `password`) VALUES
+(10, 'yota', '1995');
+
 -- --------------------------------------------------------
 
 --
@@ -57,10 +71,10 @@ CREATE TABLE `users` (
 CREATE TABLE `user_groups` (
   `user_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
-  `goal_price` int(11) NOT NULL,
-  `current_price` int(11) NOT NULL,
-  `goal_desc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `join_flag` tinyint(4) NOT NULL
+  `goal_price` int(11) NOT NULL DEFAULT '0',
+  `current_price` int(11) NOT NULL DEFAULT '0',
+  `goal_desc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `join_flag` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -83,8 +97,9 @@ ALTER TABLE `users`
 -- Indexes for table `user_groups`
 --
 ALTER TABLE `user_groups`
-  ADD KEY `user_group_fk_1` (`user_id`),
-  ADD KEY `user_group_fk_2` (`group_id`);
+  ADD PRIMARY KEY (`user_id`,`group_id`),
+  ADD KEY `user_group_fk_2` (`group_id`),
+  ADD KEY `user_group_fk_1` (`user_id`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -94,13 +109,13 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- ダンプしたテーブルの制約
