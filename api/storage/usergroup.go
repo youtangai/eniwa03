@@ -93,3 +93,22 @@ func GetGroupsByUserID(userID string) ([]model.JoinedGroup, error) {
 	}
 	return groups, nil
 }
+
+func CreateUserGroup(userid, groupid string) error {
+	var usergroup model.UserGroup
+	userID, err := strconv.Atoi(userid)
+	if err != nil {
+		return err
+	}
+	groupID, err := strconv.Atoi(groupid)
+	if err != nil {
+		return err
+	}
+	usergroup.UserID = userID
+	usergroup.GroupID = groupID
+	err = createUserGroup(usergroup)
+	if err != nil {
+		return err
+	}
+	return nil
+}

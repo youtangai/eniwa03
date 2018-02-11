@@ -58,3 +58,12 @@ func TestGetGroupsByUserID(t *testing.T) {
 	}
 	fmt.Printf("rows = %v", rows)
 }
+
+func CreateUserGroupExport(t *testing.T) {
+	userid := "11"
+	groupid := "4"
+	err := CreateUserGroup(userid, groupid)
+	if err != nil {
+		t.Fatalf("err = %v", err)
+	}
+}
