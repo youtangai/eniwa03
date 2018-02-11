@@ -17,6 +17,7 @@ const (
 
 //LoginController is
 func LoginController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	var resp model.Login
 	username := c.Query("name")
 	password := c.Query("pass")
@@ -25,7 +26,7 @@ func LoginController(c *gin.Context) {
 	user.Password = password
 	id, err := storage.GetUserIDByNamePass(user)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusOK, gin.H{"status": "error"})
 		log.Printf("err = %v", err)
 		return
 	}
