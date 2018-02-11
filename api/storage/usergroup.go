@@ -71,3 +71,25 @@ func deleteUserGroup(usergroup model.UserGroup) error {
 	log.Printf("result = %v", result)
 	return nil
 }
+
+//GetGroupsByUserID is
+func GetGroupsByUserID(userID string) ([]model.JoinedGroup, error) {
+	var groups []model.JoinedGroup
+	var group model.JoinedGroup
+	rows, err := DataBase.Query(`
+		select id, group_name, state from user_groups 
+		inner join groups on user_groups.group_id = groups.id
+		where user_id = '` + userID + `'
+	`)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		err := rows.Scan(&(group.ID), &(group.GroupName), &(group.Status))
+		if err != nil {
+			return nil, err
+		}
+		groups = append(groups, group)
+	}
+	return groups, nil
+}

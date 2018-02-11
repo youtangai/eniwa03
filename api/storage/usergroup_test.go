@@ -49,3 +49,12 @@ func TestDeleteUserGroup(t *testing.T) {
 		t.Fatalf("err = %v", err)
 	}
 }
+
+func TestGetGroupsByUserID(t *testing.T) {
+	userid := "11"
+	rows, err := GetGroupsByUserID(userid)
+	if err != nil {
+		t.Fatalf("err = %v", err)
+	}
+	fmt.Printf("rows = %v", rows)
+}
