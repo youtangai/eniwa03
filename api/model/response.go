@@ -23,6 +23,7 @@ type Individual struct {
 
 //GroupDetail is
 type GroupDetail struct {
+	GroupName   string       `json:"g_name"`
 	State       int          `json:"state"`
 	Start       string       `json:"start"`
 	Dead        string       `json:"dead"`
