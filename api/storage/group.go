@@ -57,3 +57,15 @@ func updateGroup(group model.Group) error {
 	log.Printf("result = %#v", result)
 	return nil
 }
+
+func deleteGroup(group model.Group) error {
+	groupID := strconv.Itoa(group.ID)
+	result, err := DataBase.Exec(`
+		delete from groups where id = '` + groupID + `'	
+	`)
+	if err != nil {
+		return err
+	}
+	log.Printf("result = %#v", result)
+	return nil
+}
