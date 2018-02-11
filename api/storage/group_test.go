@@ -32,11 +32,12 @@ func TestReadGroups(t *testing.T) {
 	fmt.Printf("groups = %#v\n", groups)
 }
 
-func TestUPdateGroup(t *testing.T) {
+func TestUpdateGroup(t *testing.T) {
 	group.GroupName = "change"
 	group.Start = time.Now()
 	group.Dead = time.Now()
 	group.State = 2
+	//group.ID = 1
 	err := updateGroup(group)
 	if err != nil {
 		t.Fatalf("err = %#v", err)

@@ -48,8 +48,11 @@ func updateGroup(group model.Group) error {
 	start := group.Start.Format("2006-01-02 15:04:05")
 	dead := group.Dead.Format("2006-01-02 15:04:05")
 	state := strconv.Itoa(group.State)
+	// query := `update groups set group_name = '` + group.GroupName + `',start = '` + start + `',dead = '` + dead + `', state = '` + state + `' where id = '` + groupID + `'`
+	// fmt.Println(query)
+	// result, err := DataBase.Exec(query)
 	result, err := DataBase.Exec(`
-		update groups set group_name = '` + group.GroupName + `', start = '` + start + `', dead = '` + dead + `', state = ` + state + ` where id = '` + groupID + `'
+		update groups set group_name = '` + group.GroupName + `',start = '` + start + `',dead = '` + dead + `', state = '` + state + `' where id = '` + groupID + `'
 	`)
 	if err != nil {
 		return err
