@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/youtangai/eniwa03/api/controller"
 )
 
 const (
@@ -13,10 +14,14 @@ const (
 
 func main() {
 	router := gin.Default()
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
+	v1 := router.Group("/api/v1")
+	{
+		v1.GET("/ping", func(c *gin.Context) {
+			c.JSON(http.StatusOK, gin.H{
+				"message": "pong",
+			})
 		})
-	})
+		v1.GET("/login", controller.LoginController)
+	}
 	router.Run(":" + PORT)
 }
