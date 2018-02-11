@@ -175,16 +175,19 @@ func GetIndividuals(groupid string) ([]model.Individual, error) {
 	return individuals, nil
 }
 
-func GetUserGroupByUseridGroupid(userid, groupid string) (model.UserGroup, error) {
+func GetUserGroupByUseridGroupid(userid, groupid string) (model.UserGroup, string, error) {
 	var usergroup model.UserGroup
+	var userName string
 	row := DataBase.QueryRow(`
-		select * from user_groups where user_id = '` + userid + `' and group_id = '` + groupid + `'	
+		select user_id, group_id, goal_price, current_price, goal_desc, join_flag, name from user_groups
+		inner join users on user_id = users.id
+		where user_id = '` + userid + `' and group_id = '` + groupid + `'	
 	`)
-	err := row.Scan(&(usergroup.UserID), &(usergroup.GroupID), &(usergroup.GoalPrice), &(usergroup.CurrentPrice), &(usergroup.GoalDesc), &(usergroup.JoinFlag))
+	err := row.Scan(&(usergroup.UserID), &(usergroup.GroupID), &(usergroup.GoalPrice), &(usergroup.CurrentPrice), &(usergroup.GoalDesc), &(usergroup.JoinFlag), &(userName))
 	if err != nil {
-		return usergroup, err
+		return usergroup, "", err
 	}
-	return usergroup, nil
+	return usergroup, userName, nil
 }
 
 func SetGoalUserGroup(userid, groupid, price, desc string) error {

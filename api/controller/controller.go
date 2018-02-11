@@ -149,12 +149,13 @@ func SetController(c *gin.Context) {
 	var resp model.GoalDetail
 	userid := c.Query("user_id")
 	groupid := c.Query("g_id")
-	usergroup, err := storage.GetUserGroupByUseridGroupid(userid, groupid)
+	usergroup, username, err := storage.GetUserGroupByUseridGroupid(userid, groupid)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		log.Printf("err = %v", err)
 		return
 	}
+	resp.UserName = username
 	resp.CurrentPrice = usergroup.CurrentPrice
 	resp.GoalPrice = usergroup.GoalPrice
 	resp.Desc = usergroup.GoalDesc

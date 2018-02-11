@@ -31,6 +31,7 @@ type GroupDetail struct {
 
 //GoalDetail is
 type GoalDetail struct {
+	UserName     string `json:"user_name"`
 	GoalPrice    int    `json:"goal_price"`
 	CurrentPrice int    `json:"current_price"`
 	Desc         string `json:"description"`
