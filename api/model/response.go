@@ -36,3 +36,9 @@ type GoalDetail struct {
 	CurrentPrice int    `json:"current_price"`
 	Desc         string `json:"description"`
 }
+
+//SuggestUser is
+type SuggestUser struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
