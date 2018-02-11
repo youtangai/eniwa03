@@ -12,7 +12,7 @@ func createGroup(group model.Group) (int, error) {
 	dead := group.Dead.Format("2006-01-02 15:04:05")
 	state := strconv.Itoa(group.State)
 	result, err := DataBase.Exec(`
-		insert into groups(group_name, start, dead, state) values('` + group.GroupName + `', ` + start + `', '` + dead + `', '` + state + `')	
+		insert into groups(group_name, start, dead, state) values('` + group.GroupName + `', '` + start + `', '` + dead + `', '` + state + `')	
 	`)
 	if err != nil {
 		return -1, err

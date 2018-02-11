@@ -12,7 +12,7 @@ var (
 	group model.Group
 )
 
-func TestCreate(t *testing.T) {
+func TestCreateGroup(t *testing.T) {
 	group.GroupName = "eniwa03"
 	group.Start = time.Now()
 	group.Dead = time.Now()
