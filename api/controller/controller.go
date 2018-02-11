@@ -125,3 +125,11 @@ func SetController(c *gin.Context) {
 	resp.Desc = usergroup.GoalDesc
 	c.JSON(http.StatusOK, resp)
 }
+
+func SettingController(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"message": "success"})
+}
+
+func ChargeController(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"message": "success"})
+}
