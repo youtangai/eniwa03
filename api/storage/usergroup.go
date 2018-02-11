@@ -38,3 +38,23 @@ func readUserGroups() ([]model.UserGroup, error) {
 	}
 	return usergroups, nil
 }
+
+func updateUserGroup(usergroup model.UserGroup) error {
+	userID := strconv.Itoa(usergroup.UserID)
+	groupID := strconv.Itoa(usergroup.GroupID)
+	goalPrice := strconv.Itoa(usergroup.GoalPrice)
+	currentPrice := strconv.Itoa(usergroup.CurrentPrice)
+	joinFlag := "0"
+	if usergroup.JoinFlag {
+		joinFlag = "1"
+	}
+
+	result, err := DataBase.Exec(`
+		update user_groups set goal_price = '` + goalPrice + `', current_price = '` + currentPrice + `', goal_desc = '` + usergroup.GoalDesc + `', join_flag = '` + joinFlag + `' where user_id = '` + userID + `' and group_id = '` + groupID + `'
+	`)
+	if err != nil {
+		return err
+	}
+	log.Printf("result = %v", result)
+	return nil
+}
