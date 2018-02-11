@@ -22,6 +22,7 @@ func main() {
 			})
 		})
 		v1.GET("/login", controller.LoginController)
+		v1.GET("/lists/:user_id", controller.ListsController)
 	}
 	router.Run(":" + PORT)
 }

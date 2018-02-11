@@ -28,3 +28,15 @@ func LoginController(c *gin.Context) {
 	resp.UserID = strconv.Itoa(id)
 	c.JSON(http.StatusOK, resp)
 }
+
+//ListsController is
+func ListsController(c *gin.Context) {
+	userID := c.Param("user_id")
+	groups, err := storage.GetGroupsByUserID(userID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Printf("err = %v", err)
+		return
+	}
+	c.JSON(http.StatusOK, groups)
+}
