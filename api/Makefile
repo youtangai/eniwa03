@@ -4,3 +4,9 @@ eniwa: main.go
 clean:eniwa
 	rm -f eniwa
 
+build:eniwa
+	docker build -t yotanagai/eniwa03 .
+
+push:
+	docker push yotanagai/eniwa03
+

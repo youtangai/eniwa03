@@ -37,6 +37,7 @@ func LoginController(c *gin.Context) {
 
 //ListsController is
 func ListsController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	userID := c.Param("user_id")
 	groups, err := storage.GetGroupsByUserID(userID)
 	if err != nil {
@@ -48,6 +49,7 @@ func ListsController(c *gin.Context) {
 }
 
 func MakeGroupController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	name := c.Query("name")
 	date := c.Query("date")
 	users := c.Query("users")
@@ -75,6 +77,7 @@ func MakeGroupController(c *gin.Context) {
 }
 
 func InviteController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	userID := c.Query("user_id")
 	groupID := c.Query("group_id")
 	status := c.Query("status")
@@ -88,6 +91,7 @@ func InviteController(c *gin.Context) {
 }
 
 func DetailController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	groupid := c.Param("group_id")
 	var detail model.GroupDetail
 	//グループを１つ取得
@@ -112,6 +116,7 @@ func DetailController(c *gin.Context) {
 }
 
 func SetController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	var resp model.GoalDetail
 	userid := c.Query("user_id")
 	groupid := c.Query("g_id")
@@ -128,6 +133,7 @@ func SetController(c *gin.Context) {
 }
 
 func SettingController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	userid := c.Query("user_id")
 	groupid := c.Query("group_id")
 	price := c.Query("price")
@@ -142,6 +148,7 @@ func SettingController(c *gin.Context) {
 }
 
 func ChargeController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	userid := c.Query("user_id")
 	groupid := c.Query("group_id")
 	price := c.Query("price")
