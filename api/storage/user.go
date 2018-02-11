@@ -76,3 +76,22 @@ func GetUserIDByNamePass(user model.User) (int, error) {
 	}
 	return id, nil
 }
+
+func GetUsersByKeyword(keyword string) ([]model.SuggestUser, error) {
+	var users []model.SuggestUser
+	var user model.SuggestUser
+	rows, err := DataBase.Query(`
+		select id, name from users where name like '%` + keyword + `%'
+	`)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		err := rows.Scan(&(user.ID), &(user.Name))
+		if err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+	}
+	return users, nil
+}
