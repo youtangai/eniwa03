@@ -27,5 +27,5 @@ type UserGroup struct {
 	GoalPrice    int
 	CurrentPrice int
 	GoalDesc     string
-	JoinFlag     bool
+	JoinFlag     int
 }
