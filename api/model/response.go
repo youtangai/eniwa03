@@ -40,5 +40,5 @@ type GoalDetail struct {
 //SuggestUser is
 type SuggestUser struct {
 	ID   string `json:"id"`
-	Name string `json:"name"`
+	Name string `json:"label"`
 }
