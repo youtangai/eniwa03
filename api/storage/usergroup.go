@@ -186,7 +186,7 @@ func SetGoalUserGroup(userid, groupid, price, desc string) error {
 
 func AddCurrentPrice(userid, groupid, price string) error {
 	result, err := DataBase.Exec(`
-		update user_groups set current_price = current_price + '` + price + `' where user_id = '` + userid + `' and group_id = '` + groupid + `'	
+		update user_groups set current_price = current_price + ` + price + ` where user_id = '` + userid + `' and group_id = '` + groupid + `'	
 	`)
 	if err != nil {
 		return err
