@@ -130,6 +130,7 @@ func DetailController(c *gin.Context) {
 		log.Printf("err = %v", err)
 		return
 	}
+	detail.GroupName = group.GroupName
 	detail.State = group.State
 	detail.Start = group.Start.Format(TIME_FORMAT)
 	detail.Dead = group.Dead.Format(TIME_FORMAT)
