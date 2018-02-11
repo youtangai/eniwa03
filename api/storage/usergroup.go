@@ -79,7 +79,7 @@ func GetGroupsByUserID(userID string) ([]model.JoinedGroup, error) {
 	var groups []model.JoinedGroup
 	var group model.JoinedGroup
 	rows, err := DataBase.Query(`
-		select id, group_name, state from user_groups 
+		select id, group_name, state, join_flag from user_groups 
 		inner join groups on user_groups.group_id = groups.id
 		where user_id = '` + userID + `'
 	`)
@@ -87,11 +87,25 @@ func GetGroupsByUserID(userID string) ([]model.JoinedGroup, error) {
 		return nil, err
 	}
 	for rows.Next() {
-		err := rows.Scan(&(group.ID), &(group.GroupName), &(group.Status))
+		var joinFlag string
+		err := rows.Scan(&(group.ID), &(group.GroupName), &(group.Status), &(joinFlag))
 		if err != nil {
 			return nil, err
 		}
-		groups = append(groups, group)
+		if joinFlag != "-1" {
+			if joinFlag == "0" {
+				group.Status = "invite"
+			} else {
+				if group.Status == "0" {
+					group.Status = "doing"
+				} else if group.Status == "1" {
+					group.Status = "success"
+				} else {
+					group.Status = "failed"
+				}
+			}
+			groups = append(groups, group)
+		}
 	}
 	return groups, nil
 }
