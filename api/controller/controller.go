@@ -141,5 +141,14 @@ func SettingController(c *gin.Context) {
 }
 
 func ChargeController(c *gin.Context) {
+	userid := c.Query("user_id")
+	groupid := c.Query("group_id")
+	price := c.Query("price")
+	err := storage.AddCurrentPrice(userid, groupid, price)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Printf("err = %v", err)
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
