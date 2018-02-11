@@ -37,7 +37,6 @@ func TestUpdateGroup(t *testing.T) {
 	group.Start = time.Now()
 	group.Dead = time.Now()
 	group.State = 2
-	//group.ID = 1
 	err := updateGroup(group)
 	if err != nil {
 		t.Fatalf("err = %#v", err)
