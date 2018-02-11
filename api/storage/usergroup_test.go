@@ -14,9 +14,16 @@ var (
 func TestCreateUserGroup(t *testing.T) {
 	usergroup.UserID = 10
 	usergroup.GroupID = 4
-	id, err := createUserGroup(usergroup)
+	err := createUserGroup(usergroup)
 	if err != nil {
 		t.Fatalf("err = %v", err)
 	}
-	fmt.Println(id)
+}
+
+func TestReadUserGroups(t *testing.T) {
+	usergroups, err := readUserGroups()
+	if err != nil {
+		t.Fatalf("err = %v", err)
+	}
+	fmt.Printf("%v", usergroups)
 }
