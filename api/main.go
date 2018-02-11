@@ -24,6 +24,7 @@ func main() {
 		v1.GET("/login", controller.LoginController)
 		v1.GET("/lists/:user_id", controller.ListsController)
 		v1.POST("/make_group", controller.MakeGroupController)
+		v1.POST("/invite_group", controller.InviteController)
 	}
 	router.Run(":" + PORT)
 }
