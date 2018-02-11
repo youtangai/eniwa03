@@ -64,3 +64,15 @@ func deleteUser(user model.User) error {
 	log.Printf("result = %#v", result)
 	return nil
 }
+
+func GetUserIDByNamePass(user model.User) (int, error) {
+	var id int
+	row := DataBase.QueryRow(`
+		select id from users where name = '` + user.Name + `' and password = '` + user.Password + `'	
+	`)
+	err := row.Scan(&(id))
+	if err != nil {
+		return -1, err
+	}
+	return id, nil
+}
