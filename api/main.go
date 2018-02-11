@@ -31,6 +31,7 @@ func main() {
 		v1.POST("/charge", controller.ChargeController)
 		v1.GET("/users", controller.UsersController)
 		v1.POST("/invite", controller.InvitationController)
+		v1.POST("/login", controller.CreateUserController)
 	}
 	router.Run(":" + PORT)
 }

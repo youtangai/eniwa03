@@ -95,3 +95,14 @@ func GetUsersByKeyword(keyword string) ([]model.SuggestUser, error) {
 	}
 	return users, nil
 }
+
+func CreateUser(name, pass string) error {
+	var user model.User
+	user.Name = name
+	user.Password = pass
+	_, err := createUser(user)
+	if err != nil {
+		return err
+	}
+	return nil
+}

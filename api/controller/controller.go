@@ -230,3 +230,16 @@ func InvitationController(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
+
+func CreateUserController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	name := c.Query("name")
+	pass := c.Query("pass")
+	err := storage.CreateUser(name, pass)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Printf("err = %v", err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "success"})
+}
