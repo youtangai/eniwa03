@@ -139,3 +139,24 @@ func UpdateUserGroup(userid, groupid, status string) error {
 	}
 	return nil
 }
+
+func GetIndividuals(groupid string) ([]model.Individual, error) {
+	var individuals []model.Individual
+	rows, err := DataBase.Query(`
+		select id, name, current_price, goal_price from user_groups 
+		inner join users on user_groups.user_id = users.id
+		where group_id = '` + groupid + `'	
+	`)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var individual model.Individual
+		err := rows.Scan(&(individual.UserID), &(individual.UserName), &(individual.Current), &(individual.Goal))
+		if err != nil {
+			return nil, err
+		}
+		individuals = append(individuals, individual)
+	}
+	return individuals, nil
+}

@@ -47,14 +47,23 @@ func readGroups() ([]model.Group, error) {
 	return groups, nil
 }
 
+func getGroupByID(groupid string) (model.Group, error) {
+	var group model.Group
+	row := DataBase.QueryRow(`
+		select * from groups where id = '` + groupid + `'	
+	`)
+	err := row.Scan(&(group.ID), &(group.GroupName), &(group.Start), &(group.Dead), &(group.State))
+	if err != nil {
+		return group, err
+	}
+	return group, nil
+}
+
 func updateGroup(group model.Group) error {
 	groupID := strconv.Itoa(group.ID)
 	start := group.Start.Format("2006-01-02 15:04:05")
 	dead := group.Dead.Format("2006-01-02 15:04:05")
 	state := strconv.Itoa(group.State)
-	// query := `update groups set group_name = '` + group.GroupName + `',start = '` + start + `',dead = '` + dead + `', state = '` + state + `' where id = '` + groupID + `'`
-	// fmt.Println(query)
-	// result, err := DataBase.Exec(query)
 	result, err := DataBase.Exec(`
 		update groups set group_name = '` + group.GroupName + `',start = '` + start + `',dead = '` + dead + `', state = '` + state + `' where id = '` + groupID + `'
 	`)
@@ -91,4 +100,12 @@ func CreateGroup(name, date string) (int, error) {
 		return -2, err
 	}
 	return id, nil
+}
+
+func GetGroupByID(id string) (model.Group, error) {
+	group, err := getGroupByID(id)
+	if err != nil {
+		return group, err
+	}
+	return group, nil
 }

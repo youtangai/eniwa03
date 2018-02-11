@@ -11,6 +11,10 @@ import (
 	"github.com/youtangai/eniwa03/api/storage"
 )
 
+const (
+	TIME_FORMAT = "2016-01-02"
+)
+
 //LoginController is
 func LoginController(c *gin.Context) {
 	var resp model.Login
@@ -80,4 +84,28 @@ func InviteController(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
+}
+
+func DetailController(c *gin.Context) {
+	groupid := c.Param("group_id")
+	var detail model.GroupDetail
+	//グループを１つ取得
+	group, err := storage.GetGroupByID(groupid)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Printf("err = %v", err)
+		return
+	}
+	detail.State = group.State
+	detail.Start = group.Start.Format(TIME_FORMAT)
+	detail.Dead = group.Dead.Format(TIME_FORMAT)
+	//ユーザと情報を取得
+	individuals, err := storage.GetIndividuals(groupid)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Printf("err = %v", err)
+		return
+	}
+	detail.Individuals = individuals
+	c.JSON(http.StatusOK, detail)
 }
