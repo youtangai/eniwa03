@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -56,6 +57,7 @@ func MakeGroupController(c *gin.Context) {
 	userid := c.Query("user_id")
 	users = strings.Trim(users, "[")
 	users = strings.Trim(users, "]")
+	fmt.Printf("invite users = %v\n", users)
 
 	//グループ作成
 	id, err := storage.CreateGroup(name, date)
@@ -85,11 +87,13 @@ func MakeGroupController(c *gin.Context) {
 	if len(users) != 0 {
 		if strings.Contains(users, ",") {
 			userslice = strings.Split(users, ",")
+			fmt.Printf("users =%+v", userslice)
 		} else {
 			userslice = append(userslice, users)
+			fmt.Printf("users =%+v", userslice)
 		}
 		for _, value := range userslice {
-			err = storage.CreateUserGroup(idString, value)
+			err = storage.CreateUserGroup(value, idString)
 			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 				log.Printf("err = %v", err)
@@ -98,7 +102,7 @@ func MakeGroupController(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "success"})
+	c.JSON(http.StatusOK, gin.H{"group_id": idString})
 }
 
 func InviteController(c *gin.Context) {
