@@ -53,9 +53,10 @@ func MakeGroupController(c *gin.Context) {
 	name := c.Query("name")
 	date := c.Query("date")
 	users := c.Query("users")
+	userid := c.Query("user_id")
 	users = strings.Trim(users, "[")
 	users = strings.Trim(users, "]")
-	userslice := strings.Split(users, ",")
+
 	//グループ作成
 	id, err := storage.CreateGroup(name, date)
 	if err != nil {
@@ -63,16 +64,40 @@ func MakeGroupController(c *gin.Context) {
 		log.Printf("err = %v", err)
 		return
 	}
-	//招待作成
 	idString := strconv.Itoa(id)
-	for _, value := range userslice {
-		err = storage.CreateUserGroup(idString, value)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			log.Printf("err = %v", err)
-			return
+
+	//作成者自身をjoinにする
+	err = storage.CreateUserGroup(userid, idString)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Printf("err = %v", err)
+		return
+	}
+	err = storage.UpdateUserGroupJoin(userid, idString, "1")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Printf("err = %v", err)
+		return
+	}
+
+	//招待作成
+	var userslice []string
+	if len(users) != 0 {
+		if strings.Contains(users, ",") {
+			userslice = strings.Split(users, ",")
+		} else {
+			userslice = append(userslice, users)
+		}
+		for _, value := range userslice {
+			err = storage.CreateUserGroup(idString, value)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				log.Printf("err = %v", err)
+				return
+			}
 		}
 	}
+
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
 
