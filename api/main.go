@@ -29,7 +29,7 @@ func main() {
 		v1.GET("/set", controller.SetController)
 		v1.POST("/setting", controller.SettingController)
 		v1.POST("/charge", controller.ChargeController)
-		v1.GET("/users", controller.GetUsersByKeyword)
+		v1.GET("/users", controller.UsersController)
 	}
 	router.Run(":" + PORT)
 }
