@@ -115,7 +115,7 @@ func CreateUserGroup(userid, groupid string) error {
 	return nil
 }
 
-func UpdateUserGroup(userid, groupid, status string) error {
+func UpdateUserGroupJoin(userid, groupid, status string) error {
 	var usergroup model.UserGroup
 	userID, err := strconv.Atoi(userid)
 	if err != nil {
@@ -171,4 +171,15 @@ func GetUserGroupByUseridGroupid(userid, groupid string) (model.UserGroup, error
 		return usergroup, err
 	}
 	return usergroup, nil
+}
+
+func SetGoalUserGroup(userid, groupid, price, desc string) error {
+	result, err := DataBase.Exec(`
+		update user_groups set goal_price = '` + price + `', goal_desc = '` + desc + `' where user_id = '` + userid + `' and group_id = '` + groupid + `'
+	`)
+	if err != nil {
+		return err
+	}
+	log.Printf("result = %v", result)
+	return nil
 }
