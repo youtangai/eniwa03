@@ -190,3 +190,15 @@ func ChargeController(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
+
+func UsersController(c *gin.Context) {
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	keyword := c.Query("keyword")
+	users, err := storage.GetUsersByKeyword(keyword)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Printf("err = %v", err)
+		return
+	}
+	c.JSON(http.StatusOK, users)
+}
