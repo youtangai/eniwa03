@@ -7,6 +7,11 @@ import (
 	"github.com/youtangai/eniwa03/api/model"
 )
 
+const (
+	JOIN   = 1
+	REJECT = -1
+)
+
 func createUserGroup(usergroup model.UserGroup) error {
 	userID := strconv.Itoa(usergroup.UserID)
 	groupID := strconv.Itoa(usergroup.GroupID)
@@ -44,10 +49,7 @@ func updateUserGroup(usergroup model.UserGroup) error {
 	groupID := strconv.Itoa(usergroup.GroupID)
 	goalPrice := strconv.Itoa(usergroup.GoalPrice)
 	currentPrice := strconv.Itoa(usergroup.CurrentPrice)
-	joinFlag := "0"
-	if usergroup.JoinFlag {
-		joinFlag = "1"
-	}
+	joinFlag := strconv.Itoa(usergroup.JoinFlag)
 
 	result, err := DataBase.Exec(`
 		update user_groups set goal_price = '` + goalPrice + `', current_price = '` + currentPrice + `', goal_desc = '` + usergroup.GoalDesc + `', join_flag = '` + joinFlag + `' where user_id = '` + userID + `' and group_id = '` + groupID + `'
@@ -107,6 +109,31 @@ func CreateUserGroup(userid, groupid string) error {
 	usergroup.UserID = userID
 	usergroup.GroupID = groupID
 	err = createUserGroup(usergroup)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func UpdateUserGroup(userid, groupid, status string) error {
+	var usergroup model.UserGroup
+	userID, err := strconv.Atoi(userid)
+	if err != nil {
+		return err
+	}
+	groupID, err := strconv.Atoi(groupid)
+	if err != nil {
+		return err
+	}
+	usergroup.UserID = userID
+	usergroup.GroupID = groupID
+
+	joinStatus, err := strconv.Atoi(status)
+	if err != nil {
+		return err
+	}
+	usergroup.JoinFlag = joinStatus
+	err = updateUserGroup(usergroup)
 	if err != nil {
 		return err
 	}

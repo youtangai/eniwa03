@@ -68,3 +68,16 @@ func MakeGroupController(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
+
+func InviteController(c *gin.Context) {
+	userID := c.Query("user_id")
+	groupID := c.Query("group_id")
+	status := c.Query("status")
+	err := storage.UpdateUserGroup(userID, groupID, status)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		log.Printf("err = %v", err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "success"})
+}
